@@ -16,8 +16,8 @@ def visBiquadratic(xr,yr,gsize,cL,xl,yl,ti,type=None,coef=1):
     if type == "cap":
         Z=Z*coef
     if type == "cop":
-        Z=Z/coef
-
+        Z=coef/Z
+    print (Z)
     surf = ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.jet,
                            linewidth=0, antialiased=False)
     #ax.set_zlim(-1.01, 1.01)

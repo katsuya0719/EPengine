@@ -52,7 +52,7 @@ if __name__ == '__main__':
     biquadratic=parsed.readattrs(1,attributes)
     #print (parsed.objects[0][0])
     #print(biquadratic)
-    id = 124
+    id = 125
     name=biquadratic[id][0]
     name1=name.split(" ")[3]
     cap=float(name1.split("/")[0][:-2])
@@ -65,5 +65,5 @@ if __name__ == '__main__':
     xlabel = "Chilled water leaving temperature"
     ylabel = "Entering Condenser fluid temperature"
 
-    visBiquadratic(xrange, yrange, gsize, biquadratic[id][1:], xlabel, ylabel,name,"cap",cap)
+    visBiquadratic(xrange, yrange, gsize, biquadratic[id][1:], xlabel, ylabel,name,"cop",cop)
 
