@@ -1,6 +1,6 @@
 from eppy import modeleditor
 from eppy.modeleditor import IDF
-from .chiller import visBiquadratic
+from chiller import visBiquadratic
 
 class parseIDF():
     def __init__(self,idf):
@@ -29,14 +29,13 @@ class parseIDF():
         for obj in objs:
             attrList=[]
             for attr in attrs:
-                print(obj[attr])
                 attrList.append(obj[attr])
 
             objList.append(attrList)
 
         return objList
 
-    def plot(self,objs):
+   # def plot(self,objs):
 
 
 if __name__ == '__main__':
@@ -51,6 +50,20 @@ if __name__ == '__main__':
     parsed.readobjs(objects)
 
     biquadratic=parsed.readattrs(1,attributes)
-    print(biquadratic)
+    #print (parsed.objects[0][0])
+    #print(biquadratic)
+    id = 124
+    name=biquadratic[id][0]
+    name1=name.split(" ")[3]
+    cap=float(name1.split("/")[0][:-2])
+    cop=float(name1.split("/")[1][:-3])
+    print (cap,cop)
+    #visualize result
+    xrange = [4, 10]
+    yrange = [24, 50]
+    gsize = 0.1
+    xlabel = "Chilled water leaving temperature"
+    ylabel = "Entering Condenser fluid temperature"
 
+    visBiquadratic(xrange, yrange, gsize, biquadratic[id][1:], xlabel, ylabel,name,"cap",cap)
 

@@ -5,16 +5,19 @@ import matplotlib.pyplot as plt
 import numpy as np
 from math import *
 
-def visBiquadratic(xr,yr,gsize,cL,xl,yl,ti):
+def visBiquadratic(xr,yr,gsize,cL,xl,yl,ti,type=None,coef=1):
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     X = np.arange(xr[0], xr[1], gsize)
     Y = np.arange(yr[0], yr[1], gsize)
     X, Y = np.meshgrid(X, Y)
-    print (X,Y)
     #Z = cL[0]+cL[1]*X+cL[2]*pow(X,2)+cL[3]*Y+cL[4]*pow(Y,2)+cL[5]
     Z =cL[0]+cL[1]*X+cL[2]*X**2+cL[3]*Y+cL[4]*Y**2+cL[5]*X*Y
-    print (Z)
+    if type == "cap":
+        Z=Z*coef
+    if type == "cop":
+        Z=Z/coef
+
     surf = ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.jet,
                            linewidth=0, antialiased=False)
     #ax.set_zlim(-1.01, 1.01)
