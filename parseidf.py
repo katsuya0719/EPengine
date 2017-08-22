@@ -1,6 +1,7 @@
 from eppy import modeleditor
 from eppy.modeleditor import IDF
-from chiller import visBiquadratic
+from chiller import visBiquadratic,visQuadratic
+import json
 
 class parseIDF():
     def __init__(self,idf):
@@ -21,9 +22,10 @@ class parseIDF():
             new=idf.idfobjects[obj.upper()]
             objlist.append(new)
 
+        objdict=dict(zip(objs,objlist))
         self.objects=objlist
 
-    def readattrs(self,objid,attrs):
+    def readattrs(self,objid,attrs,dict=False):
         objs=self.objects[objid]
         objList=[]
         for obj in objs:
@@ -33,37 +35,70 @@ class parseIDF():
 
             objList.append(attrList)
 
-        return objList
+        if dict==True:
+            pass
+        else:
+            return objList
 
    # def plot(self,objs):
 
+    def export(self,format="json"):
+        """
+        export all the data included in the class
+        """
+        objs=self.objects
+        #Json=json.dumps(objs)
+        #f=open("test.json","w")
+        #f.write(Json)
+        #f.close()
+
+
+
 
 if __name__ == '__main__':
-    idf="data/EP/idf/AirCooledChiller.idf"
+    #idf="data/EP/idf/AirCooledChiller.idf"
     #idf="data/EP/idf/smallidf.idf"
-    objects=['Chiller:Electric:EIR','Curve:Biquadratic','Curve:Quadratic']
-    attributes=["Name","Coefficient1_Constant","Coefficient2_x","Coefficient3_x2","Coefficient4_y","Coefficient5_y2","Coefficient6_xy"]
-    #attributes = [Name, Coefficient1 Constant, Coefficient2 x, Coefficient3 x2, Coefficient4 y,Coefficient5 y2, Coefficient6 xy]
+    #extract geometry information
+    idf="data\\Nantou\\Design\\151221_ReviseWWR\\output.idf"
+    objects=['Zone','BuildingSurface:Detailed','FenestrationSurface:Detailed','Shading:Building:Detailed']
+    attrZone = ["Name", "Multiplier", "Ceiling_Height", "Volume"]
+    attrSurface=["Construction_Name","Zone_Name","Vertex_1_Xcoordinate","Vertex_1_Ycoordinate","Vertex_1_Zcoordinate","Vertex_2_Xcoordinate","Vertex_2_Ycoordinate","Vertex_2_Zcoordinate","Vertex_3_Xcoordinate","Vertex_3_Ycoordinate","Vertex_3_Zcoordinate","Vertex_4_Xcoordinate","Vertex_4_Ycoordinate","Vertex_4_Zcoordinate",]
+    attrShading=attrSurface[2:]
     parsed=parseIDF(idf)
-    #print (parsed.idf.printidf())
-    #print(parsed.idf.idfobjects['Chiller:Electric:EIR'.upper()])
+    parsed.readobjs(objects)
+    biquadratic = parsed.readattrs(1, attrbiquad)
+    #parsed.export()
+
+
+    #reading chiller performance curve and visualize
+    """
+    objects=['Chiller:Electric:EIR','Curve:Biquadratic','Curve:Quadratic']
+    attrbiquad=["Name","Coefficient1_Constant","Coefficient2_x","Coefficient3_x2","Coefficient4_y","Coefficient5_y2","Coefficient6_xy"]
+    attrquad=["Name","Coefficient1_Constant","Coefficient2_x","Coefficient3_x2"]
+    parsed=parseIDF(idf)
     parsed.readobjs(objects)
 
-    biquadratic=parsed.readattrs(1,attributes)
-    #print (parsed.objects[0][0])
-    #print(biquadratic)
-    id = 125
-    name=biquadratic[id][0]
+    biquadratic=parsed.readattrs(1,attrbiquad)
+    quadratic=parsed.readattrs(2,attrquad)
+
+    id = 160
+    qid=80
+    #name=biquadratic[id][0]
+    name=quadratic[qid][0]
     name1=name.split(" ")[3]
     cap=float(name1.split("/")[0][:-2])
     cop=float(name1.split("/")[1][:-3])
     print (cap,cop)
     #visualize result
-    xrange = [4, 10]
+    #xrange = [4, 10]
+    xr = [0.15, 1]
     yrange = [24, 50]
     gsize = 0.1
     xlabel = "Chilled water leaving temperature"
     ylabel = "Entering Condenser fluid temperature"
+    xl = "Part Load Ratio"
+    yl="EIR"
 
-    visBiquadratic(xrange, yrange, gsize, biquadratic[id][1:], xlabel, ylabel,name,"cop",cop)
-
+    #visBiquadratic(xrange, yrange, gsize, biquadratic[id][1:], xlabel, ylabel,name,"cap",cap)
+    visQuadratic(xr,gsize,quadratic[qid][1:],xl,yl,name)
+    """
