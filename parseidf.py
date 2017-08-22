@@ -10,6 +10,27 @@ class parseIDF():
         IDF.setiddname(idd)
         self.idf = IDF(idf)
 
+    def readidf(self,dict):
+        """
+        read idf file and extract requested object and attributes
+        :param dict:
+        :return:
+        """
+        idf=self.idf
+        strobjs=list(dict.keys())
+        attrs=list(dict.values())
+        #print(strobjs)
+        #print(attrs)
+        self.readobjs(strobjs)
+        result={}
+        for i in range(0,len(strobjs)):
+            print(strobjs)
+            attrList=self.readattrs(i,attrs[i])
+            result[strobjs[i]]=attrList
+
+        return result
+        
+
     def readobjs(self,objs):
         """
         read specified objects from imported idf file and store in list
@@ -22,10 +43,9 @@ class parseIDF():
             new=idf.idfobjects[obj.upper()]
             objlist.append(new)
 
-        objdict=dict(zip(objs,objlist))
         self.objects=objlist
 
-    def readattrs(self,objid,attrs,dict=False):
+    def readattrs(self,objid,attrs):
         objs=self.objects[objid]
         objList=[]
         for obj in objs:
@@ -60,13 +80,16 @@ if __name__ == '__main__':
     #idf="data/EP/idf/smallidf.idf"
     #extract geometry information
     idf="data\\Nantou\\Design\\151221_ReviseWWR\\output.idf"
-    objects=['Zone','BuildingSurface:Detailed','FenestrationSurface:Detailed','Shading:Building:Detailed']
+    #objects=['Zone','BuildingSurface:Detailed','FenestrationSurface:Detailed','Shading:Building:Detailed']
     attrZone = ["Name", "Multiplier", "Ceiling_Height", "Volume"]
     attrSurface=["Construction_Name","Zone_Name","Vertex_1_Xcoordinate","Vertex_1_Ycoordinate","Vertex_1_Zcoordinate","Vertex_2_Xcoordinate","Vertex_2_Ycoordinate","Vertex_2_Zcoordinate","Vertex_3_Xcoordinate","Vertex_3_Ycoordinate","Vertex_3_Zcoordinate","Vertex_4_Xcoordinate","Vertex_4_Ycoordinate","Vertex_4_Zcoordinate",]
     attrShading=attrSurface[2:]
+    objdict = {'Zone':attrZone,'BuildingSurface:Detailed':attrSurface, 'FenestrationSurface:Detailed':attrSurface, 'Shading:Building:Detailed':attrShading}
     parsed=parseIDF(idf)
-    parsed.readobjs(objects)
-    biquadratic = parsed.readattrs(1, attrbiquad)
+    test=parsed.readidf(objdict)
+    print(test)
+    #parsed.readobjs(objects)
+    #biquadratic = parsed.readattrs(1, attrbiquad)
     #parsed.export()
 
 
