@@ -2,6 +2,7 @@ from eppy import modeleditor
 from eppy.modeleditor import IDF
 from chiller import visBiquadratic,visQuadratic
 import json
+from collections import OrderedDict
 
 class parseIDF():
     def __init__(self,idf):
@@ -14,7 +15,7 @@ class parseIDF():
         """
         read idf file and extract requested object and attributes
         :param dict:
-        :return:
+        :return:extracted object and attributes
         """
         idf=self.idf
         strobjs=list(dict.keys())
@@ -24,12 +25,11 @@ class parseIDF():
         self.readobjs(strobjs)
         result={}
         for i in range(0,len(strobjs)):
-            print(strobjs)
             attrList=self.readattrs(i,attrs[i])
+            #print(strobjs[i])
             result[strobjs[i]]=attrList
 
         return result
-        
 
     def readobjs(self,objs):
         """
@@ -51,6 +51,7 @@ class parseIDF():
         for obj in objs:
             attrList=[]
             for attr in attrs:
+                #print(obj,attr)
                 attrList.append(obj[attr])
 
             objList.append(attrList)
@@ -62,18 +63,14 @@ class parseIDF():
 
    # def plot(self,objs):
 
-    def export(self,format="json"):
+    def export(self,data):
         """
         export all the data included in the class
         """
-        objs=self.objects
-        #Json=json.dumps(objs)
-        #f=open("test.json","w")
-        #f.write(Json)
-        #f.close()
-
-
-
+        Json=json.dumps(data)
+        f=open("test.json","w")
+        f.write(Json)
+        f.close()
 
 if __name__ == '__main__':
     #idf="data/EP/idf/AirCooledChiller.idf"
@@ -82,12 +79,15 @@ if __name__ == '__main__':
     idf="data\\Nantou\\Design\\151221_ReviseWWR\\output.idf"
     #objects=['Zone','BuildingSurface:Detailed','FenestrationSurface:Detailed','Shading:Building:Detailed']
     attrZone = ["Name", "Multiplier", "Ceiling_Height", "Volume"]
-    attrSurface=["Construction_Name","Zone_Name","Vertex_1_Xcoordinate","Vertex_1_Ycoordinate","Vertex_1_Zcoordinate","Vertex_2_Xcoordinate","Vertex_2_Ycoordinate","Vertex_2_Zcoordinate","Vertex_3_Xcoordinate","Vertex_3_Ycoordinate","Vertex_3_Zcoordinate","Vertex_4_Xcoordinate","Vertex_4_Ycoordinate","Vertex_4_Zcoordinate",]
+    attrSurface=["Zone_Name","Construction_Name","Vertex_1_Xcoordinate","Vertex_1_Ycoordinate","Vertex_1_Zcoordinate","Vertex_2_Xcoordinate","Vertex_2_Ycoordinate","Vertex_2_Zcoordinate","Vertex_3_Xcoordinate","Vertex_3_Ycoordinate","Vertex_3_Zcoordinate","Vertex_4_Xcoordinate","Vertex_4_Ycoordinate","Vertex_4_Zcoordinate",]
+    attrFenestration=attrSurface[1:]
     attrShading=attrSurface[2:]
-    objdict = {'Zone':attrZone,'BuildingSurface:Detailed':attrSurface, 'FenestrationSurface:Detailed':attrSurface, 'Shading:Building:Detailed':attrShading}
+    data = (('Zone',attrZone),('BuildingSurface:Detailed',attrSurface), ('FenestrationSurface:Detailed',attrFenestration), ('Shading:Building:Detailed',attrShading))
+    objdict=OrderedDict(data)
     parsed=parseIDF(idf)
     test=parsed.readidf(objdict)
-    print(test)
+    print(test["Zone"])
+    parsed.export(test)
     #parsed.readobjs(objects)
     #biquadratic = parsed.readattrs(1, attrbiquad)
     #parsed.export()
