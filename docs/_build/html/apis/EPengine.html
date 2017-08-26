@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>EPengine package &mdash; EPengine 0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="EPengine 0 documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="epengine-package">
+<h1>EPengine package<a class="headerlink" href="#epengine-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-EPengine.chiller">
+<span id="epengine-chiller-module"></span><h2>EPengine.chiller module<a class="headerlink" href="#module-EPengine.chiller" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="EPengine.chiller.visBiquadratic">
+<code class="descclassname">EPengine.chiller.</code><code class="descname">visBiquadratic</code><span class="sig-paren">(</span><em>xr</em>, <em>yr</em>, <em>gsize</em>, <em>cL</em>, <em>xl</em>, <em>yl</em>, <em>ti</em>, <em>type=None</em>, <em>coef=1</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.chiller.visBiquadratic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualize Biquadratic graph based on the input coefficient list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>xr</strong> &#8211; xrange</li>
+<li><strong>yr</strong> &#8211; yrange</li>
+<li><strong>gsize</strong> &#8211; grid size</li>
+<li><strong>cL</strong> &#8211; coefficient list</li>
+<li><strong>xl</strong> &#8211; xlabel</li>
+<li><strong>yl</strong> &#8211; ylabel</li>
+<li><strong>ti</strong> &#8211; title</li>
+<li><strong>type</strong> &#8211; the value to visualize cop or cap(capacity)</li>
+<li><strong>coef</strong> &#8211; coefficient to be used for further calculation</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="EPengine.chiller.visQuadratic">
+<code class="descclassname">EPengine.chiller.</code><code class="descname">visQuadratic</code><span class="sig-paren">(</span><em>xr</em>, <em>gsize</em>, <em>cL</em>, <em>xl</em>, <em>yl</em>, <em>ti</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.chiller.visQuadratic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-EPengine.main">
+<span id="epengine-main-module"></span><h2>EPengine.main module<a class="headerlink" href="#module-EPengine.main" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="EPengine.main.ProcessHtml">
+<em class="property">class </em><code class="descclassname">EPengine.main.</code><code class="descname">ProcessHtml</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.main.ProcessHtml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="EPengine.main.ProcessHtml.convert_df">
+<code class="descname">convert_df</code><span class="sig-paren">(</span><em>html</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.main.ProcessHtml.convert_df" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EPengine.main.ProcessHtml.convert_dict1">
+<code class="descname">convert_dict1</code><span class="sig-paren">(</span><em>eppy</em>, <em>parent</em>, <em>child</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.main.ProcessHtml.convert_dict1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EPengine.main.ProcessHtml.convert_dict2">
+<code class="descname">convert_dict2</code><span class="sig-paren">(</span><em>eppy</em>, <em>ix</em>, <em>col</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.main.ProcessHtml.convert_dict2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EPengine.main.ProcessHtml.export_csv">
+<code class="descname">export_csv</code><span class="sig-paren">(</span><em>arr</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.main.ProcessHtml.export_csv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EPengine.main.ProcessHtml.export_json">
+<code class="descname">export_json</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.main.ProcessHtml.export_json" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EPengine.main.ProcessHtml.extract_basic">
+<code class="descname">extract_basic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.main.ProcessHtml.extract_basic" title="Permalink to this definition">¶</a></dt>
+<dd><p>extract required parameter from html file
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EPengine.main.ProcessHtml.extract_col">
+<code class="descname">extract_col</code><span class="sig-paren">(</span><em>df</em>, <em>keys</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.main.ProcessHtml.extract_col" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EPengine.main.ProcessHtml.extract_comf">
+<code class="descname">extract_comf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.main.ProcessHtml.extract_comf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EPengine.main.ProcessHtml.extract_html">
+<code class="descname">extract_html</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.main.ProcessHtml.extract_html" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EPengine.main.ProcessHtml.setfolder">
+<code class="descname">setfolder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.main.ProcessHtml.setfolder" title="Permalink to this definition">¶</a></dt>
+<dd><p>set folder and set html file
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="epengine-parseidf-module">
+<h2>EPengine.parseidf module<a class="headerlink" href="#epengine-parseidf-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-EPengine.timeseries">
+<span id="epengine-timeseries-module"></span><h2>EPengine.timeseries module<a class="headerlink" href="#module-EPengine.timeseries" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="EPengine.timeseries.ProcessCSV">
+<em class="property">class </em><code class="descclassname">EPengine.timeseries.</code><code class="descname">ProcessCSV</code><span class="sig-paren">(</span><em>folder</em>, <em>strCsv</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.timeseries.ProcessCSV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="EPengine.timeseries.ProcessCSV.divide_df">
+<code class="descname">divide_df</code><span class="sig-paren">(</span><em>dfList</em>, <em>newcols</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.timeseries.ProcessCSV.divide_df" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EPengine.timeseries.ProcessCSV.eplustimestamp">
+<code class="descname">eplustimestamp</code><span class="sig-paren">(</span><em>simdata</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.timeseries.ProcessCSV.eplustimestamp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EPengine.timeseries.ProcessCSV.export_multi_csv">
+<code class="descname">export_multi_csv</code><span class="sig-paren">(</span><em>dfList</em>, <em>csv_name</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.timeseries.ProcessCSV.export_multi_csv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EPengine.timeseries.ProcessCSV.extract_series">
+<code class="descname">extract_series</code><span class="sig-paren">(</span><em>cols</em>, <em>newcols</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.timeseries.ProcessCSV.extract_series" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is for imported csv file
+Parameters
+&#8212;&#8212;&#8212;-
+rows</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EPengine.timeseries.ProcessCSV.plot3d">
+<code class="descname">plot3d</code><span class="sig-paren">(</span><em>dfList</em>, <em>size</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.timeseries.ProcessCSV.plot3d" title="Permalink to this definition">¶</a></dt>
+<dd><p>fig=plt.figure()
+#ax=Axes3D(fig)
+ax = fig.add_subplot(111, projection=&#8216;3d&#8217;)
+ax.scatter3D(df.COT,df.PLR,df.COP,s=1,c=&#8217;b&#8217;)
+#surf=ax.plot_trisurf(df.COT,df.PLR,df.COP,cmap=cm.jet,linewidth=0.1,vmin=1)</p>
+<p>ax.set_xlabel(&#8220;Condenser Outlet Temperature&#8221;)
+ax.set_ylabel(&#8220;Part Load Ratio&#8221;)
+ax.set_zlabel(&#8220;COP&#8221;)
+#fig.colorbar(surf, shrink=0.5, aspect=5)
+fig.savefig(&#8220;test3d&#8221;,dpi=200)
+plt.show()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EPengine.timeseries.ProcessCSV.plotHist">
+<code class="descname">plotHist</code><span class="sig-paren">(</span><em>dfList</em>, <em>size</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.timeseries.ProcessCSV.plotHist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EPengine.timeseries.ProcessCSV.setfolder">
+<code class="descname">setfolder</code><span class="sig-paren">(</span><em>strCsv</em><span class="sig-paren">)</span><a class="headerlink" href="#EPengine.timeseries.ProcessCSV.setfolder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="epengine-util-module">
+<h2>EPengine.util module<a class="headerlink" href="#epengine-util-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-EPengine">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-EPengine" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">EPengine package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-EPengine.chiller">EPengine.chiller module</a></li>
+<li><a class="reference internal" href="#module-EPengine.main">EPengine.main module</a></li>
+<li><a class="reference internal" href="#epengine-parseidf-module">EPengine.parseidf module</a></li>
+<li><a class="reference internal" href="#module-EPengine.timeseries">EPengine.timeseries module</a></li>
+<li><a class="reference internal" href="#epengine-util-module">EPengine.util module</a></li>
+<li><a class="reference internal" href="#module-EPengine">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/apis/EPengine.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, katsuya obara.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="../_sources/apis/EPengine.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

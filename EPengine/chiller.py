@@ -6,6 +6,19 @@ import numpy as np
 from math import *
 
 def visBiquadratic(xr,yr,gsize,cL,xl,yl,ti,type=None,coef=1):
+    """Visualize Biquadratic graph based on the input coefficient list
+
+    :param xr: xrange
+    :param yr: yrange
+    :param gsize: grid size
+    :param cL: coefficient list
+    :param xl: xlabel
+    :param yl: ylabel
+    :param ti: title
+    :param type: the value to visualize cop or cap(capacity)
+    :param coef: coefficient to be used for further calculation
+    :return:
+    """
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     X = np.arange(xr[0], xr[1], gsize)
