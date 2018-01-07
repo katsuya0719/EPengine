@@ -1,6 +1,6 @@
 from eppy import modeleditor
 from eppy.modeleditor import IDF
-from chiller import visBiquadratic,visQuadratic
+from .chiller import visBiquadratic,visQuadratic
 import json
 from collections import OrderedDict
 
@@ -75,8 +75,11 @@ class parseIDF():
 if __name__ == '__main__':
     #idf="data/EP/idf/AirCooledChiller.idf"
     #idf="data/EP/idf/smallidf.idf"
+    idf = "data\\Nantou\\Design\\151221_ReviseWWR\\output.idf"
+    #extract material information
+
     #extract geometry information
-    idf="data\\Nantou\\Design\\151221_ReviseWWR\\output.idf"
+    """
     #objects=['Zone','BuildingSurface:Detailed','FenestrationSurface:Detailed','Shading:Building:Detailed']
     attrZone = ["Name", "Multiplier", "Ceiling_Height", "Volume"]
     attrSurface=["Zone_Name","Construction_Name","Vertex_1_Xcoordinate","Vertex_1_Ycoordinate","Vertex_1_Zcoordinate","Vertex_2_Xcoordinate","Vertex_2_Ycoordinate","Vertex_2_Zcoordinate","Vertex_3_Xcoordinate","Vertex_3_Ycoordinate","Vertex_3_Zcoordinate","Vertex_4_Xcoordinate","Vertex_4_Ycoordinate","Vertex_4_Zcoordinate",]
@@ -91,7 +94,7 @@ if __name__ == '__main__':
     #parsed.readobjs(objects)
     #biquadratic = parsed.readattrs(1, attrbiquad)
     #parsed.export()
-
+    """
 
     #reading chiller performance curve and visualize
     """
