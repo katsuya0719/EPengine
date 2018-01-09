@@ -2,7 +2,7 @@ import pandas as pd
 
 class Base():
     def __init__(self,csv):
-        df=pd.read_csv(csv)
+        df=pd.read_csv(csv,encoding='utf8')
         self.df=df
 
     def group(self,agg_method):
@@ -129,16 +129,29 @@ def SHGCtoSC(df):
     return df
 
 def ottv(df,alpha=0.7):
-    df["WWR"]=df["Glass Area[m2]"]/(df["Glass Area[m2]"]+df["Opaque Area[m2]"])*100
+    df["WWR[%]"]=df["Glass Area[m2]"]/(df["Glass Area[m2]"]+df["Opaque Area[m2]"])*100
     df["glass_numer"]=df["Glass Area[m2]"]*df["Glass SC"]*df["Direction"].apply(windowCoef)#will add esm later
     df["wall_numer"] = df["Opaque Area[m2]"] * df["U-value with Film[W/m2-K]"] * alpha*df["Direction"].apply(wallCoef)
-    df["ottv"]=(df["glass_numer"]+df["wall_numer"])/(df["Glass Area[m2]"]+df["Opaque Area[m2]"])
-    df["Total_Area"]=df["Glass Area[m2]"]+df["Opaque Area[m2]"]
-    numer=df["ottv"]*df["Total_Area"]
+    df["OTTV"]=(df["glass_numer"]+df["wall_numer"])/(df["Glass Area[m2]"]+df["Opaque Area[m2]"])
+    df["Total_Area[m2]"]=df["Glass Area[m2]"]+df["Opaque Area[m2]"]
+    numer=df["OTTV"]*df["Total_Area[m2]"]
 
-    value=sum(numer)/sum(df["Total_Area"])
+    value=sum(numer)/sum(df["Total_Area[m2]"])
+
+    df = tidydf(df)
 
     return value,df
+
+def tidydf(df):
+    df["Glass Area[m2]"]=df["Glass Area[m2]"].astype(float)
+    df.index=df["Direction"]
+    del df["Direction"]
+    del df["glass_numer"]
+    del df["wall_numer"]
+    decimals=pd.Series([0,2,1,2,0,2,2,2,1,1,0], index=["Glass Area[m2]","Glass SC","Glass U-value[W/m2-K]","Glass VLT","Opaque Area[m2]","Opaque Reflectance","U-value without Film[W/m2-K]","U-value with Film[W/m2-K]","WWR[%]","OTTV","Total_Area[m2]"])
+    temp=df.round(decimals)
+    temp1=temp.ix[:,["WWR[%]","OTTV","Total_Area[m2]","Glass SC","Glass U-value[W/m2-K]","Glass VLT","Glass Area[m2]","U-value with Film[W/m2-K]","Opaque Reflectance","Opaque Area[m2]"]]
+    return temp1
 
 def wallCoef(direction):
     et={"N":2.72,"NNE":3.30,"NE":3.86,"ENE":4.44,"E":5.01,"ESE":4.65,"SE":4.3,"SSE":3.95,"S":3.6,"SSW":3.92,"SW":4.23,"WSW":4.29,"W":4.35,"WNW":3.94,"NW":3.54,"NNW":3.13,"Roof":13.37}
@@ -149,25 +162,34 @@ def windowCoef(direction):
     sf={"N":104,"NNE":121,"NE":138,"ENE":153,"E":168,"ESE":183,"SE":197,"SSE":194,"S":191,"SSW":197,"SW":202,"WSW":189,"W":175,"WNW":157,"NW":138,"NNW":121,"Roof":264}
     return sf[direction]
 
-if __name__ == '__main__':
-    glass=Glass("C:\\Users\\obakatsu\\Dropbox\\JS\\csv\\lukhop\\Glass.csv")
-    #glass=Glass("E:\\Reference\\Programming\\Python\\DjangoEP-master\\static\\csv\\lukhop\\Glass.csv")
-    glass_agg={'Glass Visible Transmittance': 'mean', 'Glass SHGC': 'mean', 'Glass U-Factor [W/m2-K]': 'mean',
-     'Area of Multiplied Openings [m2]': 'sum'}
+def main(glasspath,opaquepath):
+    glass = Glass(glasspath)
+    glass_agg = {'Glass Visible Transmittance': 'mean', 'Glass SHGC': 'mean', 'Glass U-Factor [W/m2-K]': 'mean',
+                 'Area of Multiplied Openings [m2]': 'sum'}
     glass.group(glass_agg)
     glass.addDirection()
-    vertGlass,HoriGlass = glass.finalize(glass_agg)
-    #wall=Wall("E:\\Reference\\Programming\\Python\\DjangoEP-master\\static\\csv\\lukhop\\Opaque.csv")
-    opaque = Opaque("C:\\Users\\obakatsu\\Dropbox\\JS\\csv\\lukhop\\Opaque.csv")
+    vertGlass, HoriGlass = glass.finalize(glass_agg)
+
+    opaque = Opaque(opaquepath)
     opaque_agg = {'Reflectance': 'mean', 'U-Factor with Film [W/m2-K]': 'mean', 'U-Factor no Film [W/m2-K]': 'mean',
-                 'Gross Area [m2]': 'sum'}
+                  'Gross Area [m2]': 'sum'}
     opaque.group(opaque_agg)
     opaque.addDirection()
-    wall, roof=opaque.finalize(opaque_agg)
+    wall, roof = opaque.finalize(opaque_agg)
 
-    table=tabulize(vertGlass,HoriGlass,wall,roof)
+    table = tabulize(vertGlass, HoriGlass, wall, roof)
 
-    ottv,df=ottv(table)
+    value, df = ottv(table)
+
+    return value,df
+
+if __name__ == '__main__':
+    glasspath="C:\\Users\\obakatsu\\Dropbox\\JS\\csv\\lukhop\\Glass.csv"
+    #glass=Glass("E:\\Reference\\Programming\\Python\\DjangoEP-master\\static\\csv\\lukhop\\Glass.csv")
+    #wall=Wall("E:\\Reference\\Programming\\Python\\DjangoEP-master\\static\\csv\\lukhop\\Opaque.csv")
+    opaquepath="C:\\Users\\obakatsu\\Dropbox\\JS\\csv\\lukhop\\Opaque.csv"
+
+    value,df=main(glasspath,opaquepath)
 
     print(df)
-    print(ottv)
+    print(value)
