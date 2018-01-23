@@ -1,6 +1,6 @@
 from eppy import modeleditor
 from eppy.modeleditor import IDF
-from .chiller import visBiquadratic,visQuadratic
+#from .chiller import visBiquadratic,visQuadratic
 import json
 from collections import OrderedDict
 
