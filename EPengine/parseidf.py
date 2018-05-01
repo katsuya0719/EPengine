@@ -3,6 +3,7 @@ from eppy.modeleditor import IDF
 #from .chiller import visBiquadratic,visQuadratic
 import json
 from collections import OrderedDict
+import os
 
 class parseIDF():
     def __init__(self,idf):
@@ -63,12 +64,17 @@ class parseIDF():
 
    # def plot(self,objs):
 
-    def export(self,data):
+    def export(self,data,dest,strFile):
         """
         export all the data included in the class
         """
+        if os.path.exists(dest):
+            pass
+        else:
+            os.makedirs(dest)
+
         Json=json.dumps(data)
-        f=open("test.json","w")
+        f=open(dest+"\\"+strFile,"w")
         f.write(Json)
         f.close()
 

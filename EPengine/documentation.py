@@ -2,14 +2,14 @@ from parseidf import parseIDF
 from collections import OrderedDict
 import pandas as pd
 import numpy as np
+import json
 
 #for BEAM and LEED documentation
-class Save():
-    def __init__(self,idf):
-        self.idf=idf
+class Base():
+    def __init__(self):
+        self.setData()
 
-    def loadInfo(self):
-        idf=self.idf
+    def setData(self):
         attrLight = ["Name", "Schedule_Name", "Design_Level_Calculation_Method", "Lighting_Level",
                      "Watts_per_Zone_Floor_Area", "Watts_per_Person"]
         attrSP = ["Name", "Schedule_Name", "Design_Level_Calculation_Method", "Design_Level",
@@ -29,26 +29,46 @@ class Save():
             ('Lights', attrLight), ('ElectricEquipment', attrSP),
             ('People', attrPeople), ('ZoneVentilation:DesignFlowRate', attrDFR),
             ('Exterior:FuelEquipment', attrFuelEquipment), ('DesignSpecification:OutdoorAir', attrOA))
+
+        self.data=data
+
+class Save(Base):
+    def __init__(self,idf):
+        super().__init__()
+        self.idf=idf
+
+    def loadInfo(self,dest,strFile):
+        idf=self.idf
+        data=self.data
+
         objdict = OrderedDict(data)
         parsed = parseIDF(idf)
         # print (parsed)
-        idfObj = parsed.readidf(objdict)
-        #print(idfObj)
+        json = parsed.readidf(objdict)
         #tables=self.convertTable(idfObj,data)
         #print(tables)
-        # parsed.export(json, dest)
+        parsed.export(json, dest,strFile)
         # return parsed
 
 
-class Read():
-    def __init__(self, path):
-        self.path=path
+class Read(Base):
+    def __init__(self):
+        super().__init__()
 
-    def hvacInfo(self,path):
-        
+    def hvacInfo(self,plantpath,pumppath,coilpath):
+        plant=pd.read_csv(plantpath)
+        pump = pd.read_csv(pumppath)
+        coil = pd.read_csv(coilpath)
 
-    def convertTable(self,obj,data):
-        #print ("convert!")
+    def loadInfo(self,loadpath):
+        print (open(loadpath))
+        loadDict=json.load(open(loadpath))
+        tableDict=self.convertTable(loadDict)
+        print (tableDict)
+
+    def convertTable(self,obj):
+        data=self.data
+
         colDict=dict(data)
         tableDict={}
         for key in obj.keys():
@@ -57,12 +77,22 @@ class Read():
             df2.columns=colDict[key]
             tableDict[key]=df2
 
-        print (tableDict)
+        return tableDict
 
 if __name__ == '__main__':
     # Extract Input information
+    """
     path = "C:\\Users\\obakatsu\\Dropbox\\LHS\LEED_Submission\\case2\\case2exp.idf"
+    dest="C:\\Users\\obakatsu\\Documents\\Python_scripts\\Django\\DjangoEP\\data\html\\LukHopSt_LEED_1st17"
+    strFile="load.json"
     BEAM=Save(path)
-    BEAM.loadInfo()
+    BEAM.loadInfo(dest,strFile)
+    """
 
     #Read information for visualization
+    plantpath="C:\\Users\\obakatsu\\Documents\\Python_scripts\\Django\\DjangoEP\\data\\html\\LukHopSt_LEED_1st17\\Plant.csv"
+    pumppath = "C:\\Users\\obakatsu\\Documents\\Python_scripts\\Django\\DjangoEP\\data\\html\\LukHopSt_LEED_1st17\\Pump.csv"
+    coilpath = "C:\\Users\\obakatsu\\Documents\\Python_scripts\\Django\\DjangoEP\\data\\html\\LukHopSt_LEED_1st17\\Coil.csv"
+    loadpath="C:\\Users\\obakatsu\\Documents\\Python_scripts\\Django\\DjangoEP\\data\\html\\LukHopSt_LEED_1st17\\load.json"
+    BEAM=Read()
+    BEAM.loadInfo(loadpath)
