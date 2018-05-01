@@ -7,7 +7,7 @@ from collections import OrderedDict
 class parseIDF():
     def __init__(self,idf):
         #idd="data/EP/idd/Energy+V7_2_0.idd"
-        idd = "data/EP/idd/Energy+V8_7_0.idd"
+        idd = "C:\\Users\\obakatsu\\Documents\\Python_scripts\\EnergyPlus\\PostprocessEP\\data\\EP\\idd\\Energy+V8_7_0.idd"
         IDF.setiddname(idd)
         self.idf = IDF(idf)
 
@@ -75,8 +75,25 @@ class parseIDF():
 if __name__ == '__main__':
     #idf="data/EP/idf/AirCooledChiller.idf"
     #idf="data/EP/idf/smallidf.idf"
-    idf = "data\\Nantou\\Design\\151221_ReviseWWR\\output.idf"
+    #idf = "data\\Nantou\\Design\\151221_ReviseWWR\\output.idf"
+
     #extract material information
+    """
+    path="C:\\Users\\obakatsu\\Dropbox\\LHS\LEED_Submission\\case2\\case2exp.idf"
+    attrConstruction = ["Name", "Outside_Layer", "Layer_2", "Layer_3","Layer_4", "Layer_5", "Layer_6", "Layer_7","Layer_8", "Layer_9","Layer_10"]
+    attrMaterial = ["Name", "Roughness", "Thickness", "Conductivity", "Density",
+                   "Specific_Heat", "Thermal_Absorptance", "Solar_Absorptance", "Visible_Absorptance",]
+    attrWindowSimple = ["Name", "Solar_Heat_Gain_Coefficient", "Visible_Transmittance"]
+    data = (
+    ('Construction', attrConstruction), ('Material', attrMaterial), ('WindowMaterial:SimpleGlazingSystem', attrWindowSimple))
+    objdict = OrderedDict(data)
+    parsed = parseIDF(path)
+    #print (parsed)
+    json = parsed.readidf(objdict)
+    print (json)
+    #parsed.export(json, dest)
+    #return parsed
+    """
 
     #extract geometry information
     """
@@ -98,6 +115,7 @@ if __name__ == '__main__':
 
     #reading chiller performance curve and visualize
     """
+    idf = "data/EP/idf/AirCooledChiller.idf"
     objects=['Chiller:Electric:EIR','Curve:Biquadratic','Curve:Quadratic']
     attrbiquad=["Name","Coefficient1_Constant","Coefficient2_x","Coefficient3_x2","Coefficient4_y","Coefficient5_y2","Coefficient6_xy"]
     attrquad=["Name","Coefficient1_Constant","Coefficient2_x","Coefficient3_x2"]

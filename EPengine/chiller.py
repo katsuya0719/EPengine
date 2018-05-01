@@ -1,6 +1,8 @@
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
+import plotly
+plotly.tools.set_credentials_file(username='obakatsu', api_key='nK5JWwdD7LGUH5lx1wkz')
 import matplotlib.pyplot as plt
 import numpy as np
 from math import *
@@ -68,4 +70,4 @@ if __name__ == '__main__':
     ylabel="Electric Input Ratio"
     title="Electric Input to Cooling Output Ratio of Part Load Ratio"
     #visBiquadratic(xrange,yrange,gsize,cList,xlabel,ylabel,title)
-    visQuadratic(xrange,gsize,cList,xlabel,ylabel,title)
+    #visQuadratic(xrange,gsize,cList,xlabel,ylabel,title)
