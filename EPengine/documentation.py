@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 #for BEAM and LEED documentation
-class Base():
+class Save():
     def __init__(self,idf):
         self.idf=idf
 
@@ -34,10 +34,18 @@ class Base():
         # print (parsed)
         idfObj = parsed.readidf(objdict)
         #print(idfObj)
-        tables=self.convertTable(idfObj,data)
+        #tables=self.convertTable(idfObj,data)
         #print(tables)
         # parsed.export(json, dest)
         # return parsed
+
+
+class Read():
+    def __init__(self, path):
+        self.path=path
+
+    def hvacInfo(self,path):
+        
 
     def convertTable(self,obj,data):
         #print ("convert!")
@@ -54,5 +62,7 @@ class Base():
 if __name__ == '__main__':
     # Extract Input information
     path = "C:\\Users\\obakatsu\\Dropbox\\LHS\LEED_Submission\\case2\\case2exp.idf"
-    BEAM=Base(path)
+    BEAM=Save(path)
     BEAM.loadInfo()
+
+    #Read information for visualization
