@@ -43,8 +43,9 @@ class Save(Base):
 
         objdict = OrderedDict(data)
         parsed = parseIDF(idf)
-        # print (parsed)
+        print (parsed)
         json = parsed.readidf(objdict)
+        print (json)
         #tables=self.convertTable(idfObj,data)
         #print(tables)
         parsed.export(json, dest,strFile)
@@ -123,15 +124,16 @@ class Read(Base):
 
 if __name__ == '__main__':
     # Extract Input information
-    """
-    path = "C:\\Users\\obakatsu\\Dropbox\\LHS\LEED_Submission\\case2\\case2exp.idf"
-    dest="C:\\Users\\obakatsu\\Documents\\Python_scripts\\Django\\DjangoEP\\data\html\\LukHopSt_LEED_1st17"
+
+    path = "C:\\Users\\obakatsu\\Documents\\Python_scripts\\EnergyPlus\\PostprocessEP\\data\\idfFileparsingdoesntwork\\H2baseline20180503_3.idf"
+    dest="C:\\Users\\obakatsu\\Documents\\Python_scripts\\EnergyPlus\\PostprocessEP\\data\\idfFileparsingdoesntwork"
     strFile="load.json"
     BEAM=Save(path)
     BEAM.loadInfo(dest,strFile)
-    """
+
 
     #Read information for visualization
+    """
     plantpath="C:\\Users\\obakatsu\\Documents\\Python_scripts\\Django\\DjangoEP\\data\\html\\LukHopSt_LEED_1st17\\Plant.csv"
     pumppath = "C:\\Users\\obakatsu\\Documents\\Python_scripts\\Django\\DjangoEP\\data\\html\\LukHopSt_LEED_1st17\\Pump.csv"
     coilpath = "C:\\Users\\obakatsu\\Documents\\Python_scripts\\Django\\DjangoEP\\data\\html\\LukHopSt_LEED_1st17\\Coil.csv"
@@ -141,3 +143,4 @@ if __name__ == '__main__':
     test=BEAM.loadInfo(loadpath)
     print(len(test["Lights"]["Watts_per_Person"][0]))
     area = BEAM.areaInfo(zonepath)
+    """
