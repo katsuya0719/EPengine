@@ -14,6 +14,8 @@ from datetime import  timedelta
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 
+
+
 class ProcessCSV():
     def __init__(self,folder,strCsv):
         self.folder=folder
@@ -137,7 +139,13 @@ class ProcessCSV():
             row+=1
         plt.show()
 
+
+def read(path):
+
+
 if __name__ == '__main__':
+    #for ProcessCSV
+    """
     root="D:\\Reference\\Programming\\Python\\EnergyPlus\\PostProcessing\\PostprocessEP\\data\\"
     #loc="Nantou\\Design\\151221_ReviseWWR\\"
     #loc="2ndPA\\T3\\"
@@ -155,5 +163,4 @@ if __name__ == '__main__':
     #csvFile.export_multi_csv(dfList,csv_name)
     #csvFile.plot3d(dfList,figsize)
     csvFile.plotHist(dfList,figsize)
-
-    print ("Finished!!!")
+    """
