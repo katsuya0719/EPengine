@@ -7,12 +7,12 @@ import csv
 # noinspection PyUnresolvedReferences
 import sys
 # noinspection PyUnresolvedReferences
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import os
 import json
 from datetime import  timedelta
 from mpl_toolkits.mplot3d import Axes3D
-#from matplotlib import cm
+from matplotlib import cm
 import esoreader
 
 
@@ -140,16 +140,34 @@ class ProcessCSV():
         plt.show()
 
 class ProcessESO():
-    def __init__(self,path,search,freq):
+    def __init__(self,path,freq):
         self.freq=freq
-        self.read(path,searh)
+        self.read(path)
 
-    def read(self,path,search):
+    def read(self,path):
         eso=esoreader.read_from_path(path)
+        self.eso=eso
+        self.getKeyword()
+
+
+        #print (eso.dd.variables)
         #print(eso.find_variable(search,frequency=freq))
-        df=eso.to_frame(search,frequency=self.freq)
-        print (df.shape)
-        self.df=self.addTime(df)
+
+    def getKeyword(self):
+        #print (eso.dd.index)
+        index=self.eso.dd.index
+        keywords=set()
+        for key in index.keys():
+            keywords.add(key[2])
+
+        print ("possible keyword is")
+        print (keywords)
+
+    def setdf(self,search):
+        df=self.eso.to_frame(search,frequency=self.freq)
+        df=self.addTime(df)
+
+        return df
 
     def addTime(self,df):
         "assuming the calculation is for whole year"
@@ -160,13 +178,90 @@ class ProcessESO():
             temp.index=hours_in_year
             return temp
 
+
+
+def make_heatmap(df,colstr):
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    sns.set()
+
+    def preprocess(df,colstr):
+        #temp=pd.DataFrame(df[colstr])
+        df["Hour"]=df.index.hour.astype(str)
+        df["Date"]=df.index.date.astype(str)
+        df["DateTime"]=df.index
+        temp=df.drop_duplicates(subset='DateTime')
+        temp=temp[["Hour","Date",colstr]]
+
+        return temp
+
+    # Load the example flights dataset and conver to long-form
+    temp=preprocess(df,colstr)
+    hour=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']
+
+    table = temp.pivot("Date", "Hour", colstr)
+    table=table.ix[:,hour]
+    #table=table.sort_values(['Hour'],ascending=True)
+
+    # Draw a heatmap with the numeric values in each cell
+    f, ax = plt.subplots(figsize=(20, 5))
+    #sns.heatmap(table, annot=True, fmt="d", linewidths=.5, ax=ax)
+    sns.heatmap(table, linewidths=0, ax=ax,cmap="coolwarm")
+    plt.show()
+
+def multipleScatter(x,y,xlabel,ylabel,xrange=(0,1),yrange=(0,8),alpha=1,fig=(10,7),size=1):
+    import matplotlib.cm as cm
+    import math
+    import numpy as np
+    legends=[]
+    for str in y.columns:
+        temp=str.split(":")[0]
+        legends.append(temp)
+
+    fig=plt.figure(figsize=fig)
+    ax1=fig.add_subplot(111)
+    colors = cm.rainbow(np.linspace(0, 1, len(x.columns)))
+
+    for row,color,legend in zip(range(len(x.columns)),colors,legends):
+
+        ax1.scatter(x.iloc[:,row],y.iloc[:,row],c=color,label=legend,alpha=alpha,s=size)
+
+    ax1.set_xlabel(xlabel)
+    ax1.set_ylabel(ylabel)
+
+    #in case xmax=no
+    if xrange=='na':
+        xmax=math.ceil(x.max().max())
+        xmin=math.floor(x.min().min())
+        xrange=(xmin,xmax)
+
+    if yrange=='na':
+        ymax=math.ceil(y.max().max())
+        ymin=math.floor(y.min().min())
+        yrange=(ymin,ymax)
+
+    ax1.set_xlim(xrange)
+    ax1.set_ylim(yrange)
+
+    #legend=ax1.legend(loc='upper left')
+    legend=ax1.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+    plt.show()
+
 if __name__ == '__main__':
     #for esoreader
-    eso="C:\\Users\\obakatsu\\Dropbox\\LHS\\LEED_Submission\\Baseline\\case8\\case8exp.eso"
-    searh="Fan"
+    #eso="C:\\Users\\obakatsu\\Dropbox\\LHS\\LEED_Submission\\Baseline\\case8\\case8exp.eso"
+    eso="D:\\Projects\\Katsuya\\1701_NW_LukHopSt\\Analysis\\Energy\\result\\LEED_Submission\\Baseline\\case9\\case9exp.eso"
+    key1="Fan"
+    key2='Chiller COP'
+    key3='Chiller Part Load Ratio'
     freq='Hourly'
-    fan=ProcessESO(eso,searh,freq)
-    print(fan.df)
+    eso=ProcessESO(eso,freq)
+    fandf=eso.setdf(key1)
+    copdf=eso.setdf(key2)
+    plrdf=eso.setdf(key3)
+    #print(fan.df)
+    #make_heatmap(fandf,'SYS8 SYSTEM 12F SUPPLY FAN')
+    multipleScatter(plrdf,copdf,"Part Load Ratio","COP",size=0.5)
 
     #for ProcessCSV
     """
