@@ -178,8 +178,6 @@ class ProcessESO():
             temp.index=hours_in_year
             return temp
 
-
-
 def make_heatmap(df,colstr):
     import matplotlib.pyplot as plt
     import seaborn as sns
@@ -247,21 +245,46 @@ def multipleScatter(x,y,xlabel,ylabel,xrange=(0,1),yrange=(0,8),alpha=1,fig=(10,
     legend=ax1.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
     plt.show()
 
+def stackHist(df,bins,xlim=False,exclude=False,xlabel="COP"):
+    """
+    exclude:exclude value 0
+    """
+    import matplotlib.cm as cm
+    from matplotlib.patches import Rectangle
+    import numpy as np
+    temp=[]
+    colors = cm.rainbow(np.linspace(0, 1, len(df.columns)))
+    labels=[]
+    for col in df.columns:
+        labels.append(col.split(":")[0])
+        if exclude:
+            temp.append(df[col][df[col]>0])
+        else:
+            temp.append(df[col])
+    plt.hist(temp,bins=bins,stacked=True,color=colors)
+    handles = [Rectangle((0,0),1,1,color=c,ec="k") for c in colors]
+    plt.legend(handles,labels,bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+    plt.xlabel(xlabel)
+    if xlim:
+        plt.xlim(xlim)
+    plt.ylabel("operating hours[h]")
+
 if __name__ == '__main__':
     #for esoreader
     #eso="C:\\Users\\obakatsu\\Dropbox\\LHS\\LEED_Submission\\Baseline\\case8\\case8exp.eso"
-    eso="D:\\Projects\\Katsuya\\1701_NW_LukHopSt\\Analysis\\Energy\\result\\LEED_Submission\\Baseline\\case9\\case9exp.eso"
+    eso="D:\\Projects\\Katsuya\\1701_NW_LukHopSt\\Analysis\\Energy\\result\\LEED_Submission\\Proposed\\case8\\case8.eso"
     key1="Fan"
-    key2='Chiller COP'
-    key3='Chiller Part Load Ratio'
+    key2='VRF Heat Pump Cooling COP'
+    key3='VRF Heat Pump Part Load Ratio'
     freq='Hourly'
     eso=ProcessESO(eso,freq)
-    fandf=eso.setdf(key1)
+    #fandf=eso.setdf(key1)
     copdf=eso.setdf(key2)
     plrdf=eso.setdf(key3)
     #print(fan.df)
     #make_heatmap(fandf,'SYS8 SYSTEM 12F SUPPLY FAN')
     multipleScatter(plrdf,copdf,"Part Load Ratio","COP",size=0.5)
+    #stackHist(copdf,10,True)
 
     #for ProcessCSV
     """
