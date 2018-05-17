@@ -23,7 +23,8 @@ def processArea(path):
 def processLoad(path):
     Dict = json.load(open(path))
     Load = defaultdict(int)
-    for key in
+    for key in Load:
+
 
 
 if __name__ == '__main__':

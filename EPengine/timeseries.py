@@ -7,13 +7,13 @@ import csv
 # noinspection PyUnresolvedReferences
 import sys
 # noinspection PyUnresolvedReferences
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import os
 import json
 from datetime import  timedelta
 from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
-
+#from matplotlib import cm
+import esoreader
 
 
 class ProcessCSV():
@@ -140,10 +140,30 @@ class ProcessCSV():
         plt.show()
 
 
-def read(path):
+def read(path,search,freq):
+    eso=esoreader.read_from_path(path)
+    #print(eso.find_variable(search,frequency=freq))
+    df=eso.to_frame(search,frequency=freq)
+    print (df.shape)
+    df1=addTime(df,freq)
+    
 
+def addTime(df,freq):
+    "assuming the calculation is for whole year"
+    if freq=='Hourly':
+        hours_in_year=pd.date_range('2013-01-01', '2013-12-31 T23:00', freq='H')
+        temp=df.iloc[-8760:,:]
+        print(len(list(hours_in_year)))
+        temp.index=hours_in_year
+        return temp
 
 if __name__ == '__main__':
+    #for esoreader
+    eso="C:\\Users\\obakatsu\\Dropbox\\LHS\\LEED_Submission\\Baseline\\case8\\case8exp.eso"
+    searh="Fan"
+    freq='Hourly'
+    read(eso,searh,freq)
+
     #for ProcessCSV
     """
     root="D:\\Reference\\Programming\\Python\\EnergyPlus\\PostProcessing\\PostprocessEP\\data\\"
