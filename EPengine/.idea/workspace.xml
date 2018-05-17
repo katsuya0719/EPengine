@@ -64,11 +64,10 @@
       <file leaf-file-name="timeseries.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/timeseries.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="148" column="4" lean-forward="false" selection-start-line="148" selection-start-column="4" selection-end-line="148" selection-end-column="4" />
+            <state relative-caret-position="405">
+              <caret line="168" column="13" lean-forward="false" selection-start-line="168" selection-start-column="13" selection-end-line="168" selection-end-column="13" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
-                <element signature="e#431#4316#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -557,11 +556,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/timeseries.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="148" column="4" lean-forward="false" selection-start-line="148" selection-start-column="4" selection-end-line="148" selection-end-column="4" />
+        <state relative-caret-position="405">
+          <caret line="168" column="13" lean-forward="false" selection-start-line="168" selection-start-column="13" selection-end-line="168" selection-end-column="13" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
-            <element signature="e#431#4316#0" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -139,30 +139,34 @@ class ProcessCSV():
             row+=1
         plt.show()
 
+class ProcessESO():
+    def __init__(self,path,search,freq):
+        self.freq=freq
+        self.read(path,searh)
 
-def read(path,search,freq):
-    eso=esoreader.read_from_path(path)
-    #print(eso.find_variable(search,frequency=freq))
-    df=eso.to_frame(search,frequency=freq)
-    print (df.shape)
-    df1=addTime(df,freq)
-    
+    def read(self,path,search):
+        eso=esoreader.read_from_path(path)
+        #print(eso.find_variable(search,frequency=freq))
+        df=eso.to_frame(search,frequency=self.freq)
+        print (df.shape)
+        self.df=self.addTime(df)
 
-def addTime(df,freq):
-    "assuming the calculation is for whole year"
-    if freq=='Hourly':
-        hours_in_year=pd.date_range('2013-01-01', '2013-12-31 T23:00', freq='H')
-        temp=df.iloc[-8760:,:]
-        print(len(list(hours_in_year)))
-        temp.index=hours_in_year
-        return temp
+    def addTime(self,df):
+        "assuming the calculation is for whole year"
+        if self.freq=='Hourly':
+            hours_in_year=pd.date_range('2013-01-01', '2013-12-31 T23:00', freq='H')
+            temp=df.iloc[-8760:,:]
+            print(len(list(hours_in_year)))
+            temp.index=hours_in_year
+            return temp
 
 if __name__ == '__main__':
     #for esoreader
     eso="C:\\Users\\obakatsu\\Dropbox\\LHS\\LEED_Submission\\Baseline\\case8\\case8exp.eso"
     searh="Fan"
     freq='Hourly'
-    read(eso,searh,freq)
+    fan=ProcessESO(eso,searh,freq)
+    print(fan.df)
 
     #for ProcessCSV
     """
